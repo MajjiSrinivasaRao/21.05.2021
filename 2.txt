@@ -1,0 +1,67 @@
+// program to findout Shortest path in a maze or a matrix.
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isvalid(int i,int j,int mat[3][3])     // it checks if path is valid or not
+{
+	if((i>=0) && (j>=0) && (mat[i][j]!=0))
+	{
+	return true;
+	}
+	else
+	return false;
+}
+
+
+void find()
+{
+	int maze[3][3]={{1,0,0},{1,0,0},{1,9,0}}; // matrix
+	int r=3; // rows
+	int c=3; // columns
+	queue<pair<pair<int,int>,int>>q;  // create a queue
+	q.push({{0,0},0});// intial position where we are starting
+
+	int varr[r][c];
+	memset(varr,0,sizeof(varr));// intially visting matrix filled with zeros
+
+	int dx[]={-1,0,1,0}; // conditions how to move towrds up,down,right and left positions
+	int dy[]={0,1,0,-1};
+
+	while(!q.empty())
+	{
+	auto it=q.front();
+	int i=it.first.first;
+	int j=it.first.second;
+	int steps=it.second;
+	q.pop();
+
+		for(int x=0;x<4;x++)
+		{
+			int newi=i+dx[x];
+			int newj=j+dy[x];
+			if(isvalid(newi,newj,maze) && !varr[newi][newj])
+			{
+				if(maze[newi][newj]==9)  // here nine is the target value
+				{
+				cout<<steps+1;
+				return;
+				}
+			varr[newi][newj]=1;
+			q.push({{newi,newj},steps+1});
+			}
+		}
+
+
+	}
+cout<<-1<<"\n";	
+}
+
+
+int main()
+{	
+	find(); // function call
+	
+return 0;
+}
