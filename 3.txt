@@ -1,0 +1,78 @@
+// program to findout Shortest path in a maze
+
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isvalid(int i,int j,int mat[10][10])
+{
+	if((i>=0) && (j>=0) && (mat[i][j]!=0))
+	{
+	return true;
+	}
+	else
+	return false;
+}
+
+
+void find()
+{
+	int maze[10][10]={
+        { 1, 1, 0, 1, 1, 0, 0, 1, 1, 1 },
+        { 0, 1, 1, 1, 1, 1, 0, 1, 0, 1 },
+        { 0, 0, 1, 0, 1, 1, 1, 0, 0, 1 },
+        { 1, 0, 1, 1, 1, 0, 1, 1, 0, 1 },
+        { 0, 0, 0, 1, 0, 0, 0, 1, 0, 1 },
+        { 1, 0, 1, 1, 1, 0, 0, 1, 1, 0 },
+        { 0, 0, 0, 0, 1, 0, 0, 1, 0, 1 },
+        { 0, 1, 1, 1, 1, 9, 1, 1, 0, 0 },
+        { 1, 1, 1, 1, 1, 0, 0, 1, 1, 1 },
+        { 0, 0, 1, 0, 0, 1, 1, 0, 0, 1 },
+    };
+    
+	int r=10;
+	int c=10;
+	queue<pair<pair<int,int>,int>>q;
+	q.push({{0,0},0});// intial position where we are starting
+
+	int varr[r][c];
+	memset(varr,0,sizeof(varr));
+	int dx[]={-1,0,1,0};
+	int dy[]={0,1,0,-1};
+
+while(!q.empty())
+{
+auto it=q.front();
+int i=it.first.first;
+int j=it.first.second;
+int steps=it.second;
+q.pop();
+
+	for(int x=0;x<11;x++)
+	{
+	int newi=i+dx[x];
+	int newj=j+dy[x];
+		if(isvalid(newi,newj,maze) && !varr[newi][newj])
+		{
+		if(maze[newi][newj]==9)
+		{
+		cout<<" shortest length="<<steps+1;
+		return;
+		}
+		varr[newi][newj]=1;
+		q.push({{newi,newj},steps+1});
+		}
+	}
+
+
+}
+cout<<"There is no path "<<"\n";	
+}
+
+
+int main()
+{	
+	find(); // function call
+	
+return 0;
+}
